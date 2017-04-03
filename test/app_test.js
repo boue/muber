@@ -7,7 +7,7 @@ describe('The express app', function() {
     request(app)
       .get('/api')
       .end((err, response) => {
-        console.log(response);
-      })
+        assert(response.body.hi === 'there');
+      });
   });
 });
