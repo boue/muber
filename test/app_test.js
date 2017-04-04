@@ -8,6 +8,7 @@ describe('The express app', function() {
       .get('/api')
       .end((err, response) => {
         assert(response.body.hi === 'there');
+        done();
       });
   });
 });
