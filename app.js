@@ -16,8 +16,8 @@ routes(app);
 
 //.use is to build middleware. We are expecting the handler before to throw an error so we need 
 // err object, next is a function to go to next middleware in the chain
-app.use(() => {
-  console.log(err);
+app.use((err, req, res, next) => {
+  res.send({ error: err.message });
 });
 
 module.exports = app;
