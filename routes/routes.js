@@ -5,4 +5,5 @@ module.exports = (app) => {
   //you have a get request to route
   app.get('/api', DriversController.greeting);
   app.post('/api/drivers', DriversController.create);
+  app.put('/api/drivers/:id', DriversController.edit);
 };

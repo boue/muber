@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Driver = mongoose.model('driver');
 
 describe('Drivers controller', function() {
-  it('Post to /api/drivers creates a new driver', function() {
+  it('Post to /api/drivers creates a new driver', done => {
     Driver.count().then(count => {
       request(app)
         .post('/api/drivers')
@@ -17,5 +17,25 @@ describe('Drivers controller', function() {
           });
         });
     });
+  });
+  it('PUT to /api/drivers/id edits an existing driver', done =>  {
+    //create a driver
+    const driver = new Driver({ email: 't@t.com', driving: false});
+    //save it
+    driver.save().then(() => {
+      //from supertest allows us to make. It's a helper to put together fake requests
+      request(app)
+        .put(`/api/drivers/${driver._id}`)
+        .send({ driving: true })
+        .end(() => {
+          Driver.findOne({ email: 't@t.com'})
+            .then(driver => {
+              assert(driver.driving === true);
+              done();
+            });
+        });
+    })
+    //make a put request to update driver somehow
+    //go in database and check that new property has been saved
   });
 });
