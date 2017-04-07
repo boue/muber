@@ -5,6 +5,19 @@ module.exports = {
     res.send({ hi: 'there'});
   },
 
+  index(req, res, next) {
+    //reference to query string in URL like google.com?lng=80&lat=80
+    //everything after ? is a query so we will assume when they want a driver it contains users 
+    //lng and lat
+    const { lng, lat } = req.query;
+    //units is meters so 200km
+    //returns a promise
+    Driver.geoNear(
+      { type: 'Point', coordinates: [lng, lat] },
+      { spherical: true, maxDistance: 200000 }
+    )
+  }
+
   create(req, res, next){
     const driverProps = req.body;
 
