@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 //geojson type of queries
 const PointSchema = new Schema({
-  type: { type: String, default: 'Point'},
-  coordinates: { type: [Number], index: '2dsphere' }
+  coordinates: { type: [Number], index: '2dsphere' },
+  type: { type: String, default: 'Point'}
 })
 
 const DriverSchema = new Schema({
