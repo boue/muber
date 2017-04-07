@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//geojson type of queries
 const PointSchema = new Schema({
   coordinates: { type: [Number], index: '2dsphere' },
-  type: { type: String, default: 'Point'}
-})
+  type: { type: String, default: 'Point' }
+});
 
 const DriverSchema = new Schema({
   email: {

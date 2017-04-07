@@ -1,42 +1,35 @@
-const Driver = require('../models/driver');
+const Driver = require('../models/Driver');
 
 module.exports = {
-  greeting(req, res) {
-    res.send({ hi: 'there'});
-  },
-
   index(req, res, next) {
-    //reference to query string in URL like google.com?lng=80&lat=80
-    //everything after ? is a query so we will assume when they want a driver it contains users 
-    //lng and lat
     const { lng, lat } = req.query;
-    //units is meters so 200km
-    //returns a promise
+
     Driver.geoNear(
-      { type: 'Point', coordinates: [lng, lat] },
+      { type: 'Point', coordinates: [parseFloat(lng), parseFloat(lat)] },
       { spherical: true, maxDistance: 200000 }
     )
       .then(drivers => res.send(drivers))
       .catch(next);
   },
 
-  create(req, res, next){
+  create(req, res, next) {
     const driverProps = req.body;
 
     Driver.create(driverProps)
       .then(driver => res.send(driver))
-      .catch(next);
+      .catch(next)
   },
 
   edit(req, res, next) {
     const driverId = req.params.id;
     const driverProps = req.body;
 
-    Driver.findByIdAndUpdate({ _id: driverId }, driverProps)    
-      .then(() => Driver.findById( {_id: driverId }))
+    Driver.findByIdAndUpdate({ _id: driverId }, driverProps)
+      .then(() => Driver.findById({ _id: id }))
       .then(driver => res.send(driver))
       .catch(next);
   },
+
   delete(req, res, next) {
     const driverId = req.params.id;
 
@@ -44,5 +37,4 @@ module.exports = {
       .then(driver => res.status(204).send(driver))
       .catch(next);
   }
-  
 };
